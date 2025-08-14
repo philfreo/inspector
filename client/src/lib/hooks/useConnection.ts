@@ -117,11 +117,14 @@ export function useConnection({
       return;
     }
 
-    saveClientInformationToSessionStorage({
-      serverUrl: sseUrl,
-      clientInformation: { client_id: oauthClientId },
-      isPreregistered: true,
-    });
+    // Use an async IIFE to handle the async function
+    (async () => {
+      await saveClientInformationToSessionStorage({
+        serverUrl: sseUrl,
+        clientInformation: { client_id: oauthClientId },
+        isPreregistered: true,
+      });
+    })();
   }, [oauthClientId, sseUrl]);
 
   const pushHistory = (request: object, response?: object) => {
